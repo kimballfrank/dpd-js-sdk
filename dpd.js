@@ -1,16 +1,14 @@
 var Promise = require("bluebird");
 var request = Promise.promisify(require('request'));
-exports._dpd = module.exports = (function() {
+exports = module.exports = (function(urlRoot, baseURL) {
+
 // root default to localhost with deployd default port :2403
 var root = "http://127.0.0.1:2403";
 var BASE_URL = '/';
 
-// use the config function to set urlRoot and baseUrl as you see fit
-var config = function(urlRoot, baseURL){
-    root = urlRoot;
-    BASE_URL = baseURL;
-    return module.dpd;
-};
+// overwrite urlRoot and baseUrl as you choose
+if(urlRoot) root = urlRoot;
+if(baseURL) BASE_URL = baseURL;
 
   var consoleLog = (typeof console !== 'undefined') && console.log;
 
@@ -288,10 +286,9 @@ dpd = function(resource) {
     return r;
   };
 
-
-  // export config and dpd functions
-  module.exports.config = config;
-  module.exports.dpd = dpd;
+  // // export config and dpd functions
+  // module.exports.config = config;
+  // module.exports.dpd = dpd;
 
   return dpd;
 });
