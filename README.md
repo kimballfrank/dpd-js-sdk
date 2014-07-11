@@ -9,22 +9,26 @@ Use the deployd javascript sdk (dpd.js) anywhere you can run npm modules. It's n
 $ npm install dpd-js-sdk
 ```
 
+## Setup rootURL & baseURL (optional)
 
-## Setup
+```JavaScript
+var dpd = require('dpd-js-sdk')('http://www.yourDeploydDomain.com', '/api' );
+````
+
+## Usage
 
 ```JavaScript
 var dpd = require('dpd-js-sdk')();
 dpd.todos = dpd("/todos"); // you have to manually add your resources like so
 
-dpd.todos.get()
+dpd.todos.get(function(function(results, error) {
+  //do something
+});
 
 ```
 
-## Set rootURL & baseURL (optional)
-
-```JavaScript
-var dpd = require('dpd-js-sdk')('http://www.yourDeploydDomain.com', '/api' );
-````
+Additional documentation for the dpd.js sdk can be found here:
+http://docs.deployd.com/docs/collections/reference/dpd-js.md#s-Dpd.js
 
 ## How the sausage gets made:
 
