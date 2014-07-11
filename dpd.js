@@ -1,13 +1,13 @@
 var Promise = require("bluebird");
 var request = Promise.promisify(require('request'));
-exports = module.exports = (function(urlRoot, baseURL) {
+exports = module.exports = (function(rootURL, baseURL) {
 
 // root default to localhost with deployd default port :2403
 var root = "http://127.0.0.1:2403";
 var BASE_URL = '/';
 
-// overwrite urlRoot and baseUrl as you choose
-if(urlRoot) root = urlRoot;
+// overwrite rootURL and baseUrl as you choose
+if(rootURL) root = rootURL;
 if(baseURL) BASE_URL = baseURL;
 
   var consoleLog = (typeof console !== 'undefined') && console.log;
