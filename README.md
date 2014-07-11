@@ -13,7 +13,6 @@ $ npm install dpd-js-sdk
 
 ```JavaScript
 var dpd = require('dpd-js-sdk')('http://www.yourDeploydDomain.com', '/api' );
-
 ```
 
 ## Usage
@@ -25,7 +24,6 @@ dpd.todos = dpd("/todos"); // you have to manually add your resources like so
 dpd.todos.get(function(function(results, error) {
   //do something
 });
-
 ```
 
 Additional documentation for the dpd.js sdk can be found here:
