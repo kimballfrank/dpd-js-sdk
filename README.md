@@ -25,3 +25,12 @@ dpd.todos.get()
 var dpd = require('dpd-js-sdk')('http://www.yourDeploydDomain.com', '/api' );
 ````
 
+## How the sausage gets made:
+
+Most of this code comes straight out of https://github.com/deployd/deployd/blob/master/clib/dpd.js
+
+I have added a dependency on bluebird (for promises) and request (for sanity). Ajax requests made in the original clib/dpd.js are just replaced using promisified request.
+
+I have also removed socket.io client stuff in here for now, since I think it would take some work to get it working...and because this is enough to suit my current need. (I am using this module as part of some express middleware to get data from remote deployd API).
+
+As such, the  Realtime API features (documented here: http://docs.deployd.com/docs/collections/reference/dpd-js.md#s-Realtime API) do not work.
