@@ -13,7 +13,7 @@ $ npm install dpd-js-sdk
 
 ```JavaScript
 var dpd = require('dpd-js-sdk')('http://www.yourDeploydDomain.com', '/api' );
-````
+```
 
 ## Usage
 
