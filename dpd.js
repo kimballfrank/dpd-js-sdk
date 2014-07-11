@@ -286,9 +286,6 @@ dpd = function(resource) {
     return r;
   };
 
-  // // export config and dpd functions
-  // module.exports.config = config;
-  // module.exports.dpd = dpd;
-
+  // just give me what I want!
   return dpd;
 });
