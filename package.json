@@ -1,0 +1,22 @@
+{
+  "name": "dpd-js-sdk",
+  "version": "0.0.1",
+  "description": "Use the deployd javascript sdk as a node module",
+  "main": "dpd.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kimballfrank/dpd-js-sdk.git"
+  },
+  "keywords": [
+    "deployd",
+    "dpd"
+  ],
+  "author": "kimballfrank",
+  "bugs": {
+    "url": "https://github.com/kimballfrank/dpd-js-sdk/issues"
+  },
+  "homepage": "https://github.com/kimballfrank/dpd-js-sdk"
+}
