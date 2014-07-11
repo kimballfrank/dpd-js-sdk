@@ -9,8 +9,8 @@ var BASE_URL = '/';
 var config = function(urlRoot, baseURL){
     root = urlRoot;
     BASE_URL = baseURL;
+    return module.dpd;
 };
-
 
   var consoleLog = (typeof console !== 'undefined') && console.log;
 
@@ -293,4 +293,5 @@ dpd = function(resource) {
   module.exports.config = config;
   module.exports.dpd = dpd;
 
+  return dpd;
 });
