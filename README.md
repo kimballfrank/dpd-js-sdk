@@ -13,6 +13,7 @@ $ npm install dpd-js-sdk
 
 ```JavaScript
 var dpd = require('dpd-js-sdk')('http://www.yourDeploydDomain.com', '/api' );
+
 ```
 
 ## Usage
@@ -38,7 +39,7 @@ I have added a dependency on bluebird (for promises) and request (for sanity). A
 
 I have also removed socket.io client stuff in here for now, since I think it would take some work to get it working...and because this is enough to suit my current need. (I am using this module as part of some express middleware to get data from remote deployd API).
 
-As such, the  Realtime API features (documented here: http://docs.deployd.com/docs/collections/reference/dpd-js.md#s-Realtime API) do not work.
+As such, the  Realtime API features (documented here: http://docs.deployd.com/docs/collections/reference/dpd-js.md#s-Realtime%20API) do not work.
 
 ## Disclaimer
 
