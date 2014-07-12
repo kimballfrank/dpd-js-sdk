@@ -143,14 +143,17 @@ if(baseURL) BASE_URL = baseURL;
       var query = encodeIfComplex(options.query);
       if (query) query = '?' + query;
       else query = '';
+      var url = root + joinPath(BASE_URL, options.path) + query;
       return request({
-          url: root + joinPath(BASE_URL, options.path) + query
+          url: url
         , method: method
-        , json: JSON.stringify(options.body || {}) || "{}"
+        , headers: { "Content-type": "application/json" }
+        , body: JSON.stringify(options.body) || "{}"
       }).spread(function(response, body) {
           fn(JSON.parse(body));
       }).catch(function(err) {
           fn(null, err);
+          console.log(err);
       });
     }
   };
