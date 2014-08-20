@@ -234,30 +234,113 @@ if(baseURL) BASE_URL = baseURL;
     return settings;
   }
 
+function DpdQuery(resource){
+var self = {};
+ //query defaults
+ if(resource){
+   self.resource = '/' + resource;
+ }
+
+ self.query = {};
+
+ self.limit = function(limit){
+   self.query.$limit = limit;
+ }
+
+ self.skip = function(skip){
+   self.query.$skip = skip;
+ }
+
+ self.sortBy = function(key, value) {
+   self.query.$sort = {};
+   self.query.$sort[key] = value;
+ }
+
+ self.ascending = function(key){
+   self.query.$sort = {};
+   self.query.$sort[key] = 1;
+ }
+
+ self.descending = function(key){
+   self.query.$sort = {};
+   self.query.$sort[key] = -1;
+ }
+
+ self.equalTo = function(key, value){
+   self.query[key] = value;
+ }
+
+ self.notEqualTo = function(key, value){
+   self.query[key] = {$ne: value};
+ }
+
+ self.lessThan = function(key, value){
+   self.query[key] = {$lt: value};
+ }
+
+ self.greaterThan = function(key, value){
+   self.query[key] = {$gt: value};
+ }
+
+ self.lessThanOrEqualTo = function(key, value){
+   self.query[key] = {$lte: value};
+ }
+
+ self.greaterThanOrEqualTo = function(key, value){
+   self.query[key] = {$gte: value};
+ }
+
+ self.containedIn = function(key, array){
+   self.query[key] = {$in: array};
+ }
+
+// To-Do: notContainedIn
+//  this.notContainedIn = function(key, array){
+//    this.query[key] = {$in: array};
+//  }
+
+ self.find = function(fn) {
+   if(_.isFunction(fn)) {
+     return dpd(self.resource).get(self.query, fn);
+   }
+   else {
+     return dpd(self.resource).get(self.query);
+   }
+ }
+
+ self.first = function(fn) {
+   var query = self.query;
+   query.$limit = 1;
+   return dpd(self.resource).get(query, fn);
+ }
+
+ return self;
+}
+
 dpd = function(resource) {
     var r = {
       get: function(func, path, query, fn) {
         var settings = parseGetSignature(arguments);
         settings.path = joinPath(resource, settings.path);
-
         return baseMethods.get(settings, settings.fn);
       }
       , post: function(path, query, body, fn) {
         var settings = parsePostSignature(arguments);
         settings.path = joinPath(resource, settings.path);
-
         return baseMethods.post(settings, settings.fn);
       }
       , put: function(path, query, body, fn) {
         var settings = parsePostSignature(arguments);
         settings.path = joinPath(resource, settings.path);
-
         return baseMethods.put(settings, settings.fn);
-      }, del: function(path, query, fn) {
+      }
+      , del: function(path, query, fn) {
         var settings = parseGetSignature(arguments);
         settings.path = joinPath(resource, settings.path);
-
         return baseMethods.del(settings, settings.fn);
+      }
+      , Query: function(resource) {
+        return DpdQuery(resource);
       }
     };
 
@@ -287,7 +370,12 @@ dpd = function(resource) {
     };
 
     return r;
+
+
   };
+
+ // add some public method accessors
+  dpd.Query = dpd().Query;
 
   // just give me what I want!
   return dpd;
