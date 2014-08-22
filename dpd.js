@@ -1,5 +1,6 @@
 var Promise = require("bluebird");
 var request = Promise.promisify(require('request'));
+var _ = require('lodash');
 exports = module.exports = (function(rootURL, baseURL) {
 
 // root default to localhost with deployd default port :2403
