@@ -1,7 +1,7 @@
-var Promise = require("bluebird");
-var request = Promise.promisify(require('request'));
+var ayepromise = require('ayepromise');
+var request = require('request');
 var _ = require('lodash');
-exports = module.exports = (function(rootURL, baseURL) {
+exports = module.exports = _dpd = (function(rootURL, baseURL) {
 
 // root default to localhost with deployd default port :2403
 var root = "http://127.0.0.1:2403";
@@ -103,8 +103,6 @@ if(baseURL) BASE_URL = baseURL;
   //   };
   // }
 
-
-
   function parseResponseBody(error, response, body) {
       if (!error && response.statusCode == 200) {
           console.log(JSON.parse(body));
@@ -113,49 +111,69 @@ if(baseURL) BASE_URL = baseURL;
 
   var baseMethods = {
     get: function(options, fn) {
+      var deferred = ayepromise.defer();
+
       var query = encodeIfComplex(options.query);
       if (query) query = '?' + query;
       else query = '';
 
-      return request({
+      request({
           url: root + joinPath(BASE_URL, options.path) + query
         , method: "GET"
-       }).spread(function(response, body) {
-          fn(JSON.parse(body));
-      }).catch(function(err) {
-          fn(null, err);
+      }, function(err, response, body) {
+        if(err){
+          console.log(err);
+          deferred.resolve(fn(null, err));
+        }
+        else{
+          deferred.resolve(fn(JSON.parse(body)));
+        }
       });
+      return deferred.promise;
     }
     , del: function(options, fn) {
+
+      var deferred = ayepromise.defer();
+
       var query = encodeIfComplex(options.query);
       if (query) query = '?' + query;
       else query = '';
 
-      return request({
+      request({
           url: root + joinPath(BASE_URL, options.path) + query
         , method: "DELETE"
-      }).spread(function(response, body) {
-          fn(JSON.parse(body));
-      }).catch(function(err) {
-          fn(null, err);
+      }, function(err, response, body) {
+        if(err){
+          deferred.resolve(fn(null, err));
+        }
+        else{
+          deferred.resolve(fn(body));
+        }
       });
+      return deferred.promise;
     }
     , requestWithBody: function(method, options, fn) {
+      var deferred = ayepromise.defer();
+
       var query = encodeIfComplex(options.query);
       if (query) query = '?' + query;
       else query = '';
       var url = root + joinPath(BASE_URL, options.path) + query;
-      return request({
+
+      request({
           url: url
         , method: method
         , headers: { "Content-type": "application/json" }
         , body: JSON.stringify(options.body) || "{}"
-      }).spread(function(response, body) {
-          fn(JSON.parse(body));
-      }).catch(function(err) {
-          fn(null, err);
-          console.log(err);
+      }, function(err, response, body) {
+        if(err){
+          deferred.resolve(fn(null, err));
+        }
+        else{
+          deferred.resolve(fn(JSON.parse(body)));
+        }
       });
+      return deferred.promise;
     }
   };
 
