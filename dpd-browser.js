@@ -8,8 +8,11 @@ exports = module.exports = _dpd = (function(rootURL, baseURL) {
 var root = "http://127.0.0.1:2403";
 var BASE_URL = '/';
 
-if(window){
-  root = window.location.hostname;
+if (typeof window === 'undefined') {
+  // running in  node
+} else {
+  // running in browser
+ root = window.location.hostname;
 }
 
 // overwrite rootURL and baseUrl as you choose
