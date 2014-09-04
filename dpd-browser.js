@@ -104,11 +104,12 @@ if(baseURL) BASE_URL = baseURL;
   //   };
   // }
 
-
-
-  function parseResponseBody(error, response, body) {
-      if (!error && response.statusCode == 200) {
-          console.log(JSON.parse(body));
+  function parseBody(body) {
+      try {
+        return JSON.parse(body);
+      } catch (ex) {
+        console.error("Failed to parse \"" + body + "\" as JSON", ex);
+        return body;
       }
   }
 
@@ -129,7 +130,7 @@ if(baseURL) BASE_URL = baseURL;
           deferred.resolve(fn(null, err));
         }
         else{
-          deferred.resolve(fn(JSON.parse(body)));
+          deferred.resolve(fn(parseBody(body)));
         }
       });
       return deferred.promise;
@@ -150,7 +151,7 @@ if(baseURL) BASE_URL = baseURL;
           deferred.resolve(fn(null, err));
         }
         else{
-          deferred.resolve(fn(body));
+          deferred.resolve(fn(parseBody(body)));
         }
       });
       return deferred.promise;
@@ -173,7 +174,7 @@ if(baseURL) BASE_URL = baseURL;
           deferred.resolve(fn(null, err));
         }
         else{
-          deferred.resolve(fn(JSON.parse(body)));
+          deferred.resolve(fn(parseBody(body)));
         }
       });
       return deferred.promise;
