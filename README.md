@@ -33,7 +33,7 @@ http://docs.deployd.com/docs/collections/reference/dpd-js.html#s-Dpd.js
 
 Most of this code comes straight out of https://github.com/deployd/deployd/blob/master/clib/dpd.js
 
-I have added a dependency on bluebird (for promises) and request (for sanity). Ajax requests made in the original clib/dpd.js are just replaced using promisified request.
+I have added dependencies of ayepromise (for promises) and request (for sanity). Ajax requests made in the original clib/dpd.js are just replaced using promisified request.
 
 I have also removed socket.io client stuff in here for now, since I think it would take some work to get it working...and because this is enough to suit my current need. (I am using this module as part of some express middleware to get data from remote deployd API).
 
